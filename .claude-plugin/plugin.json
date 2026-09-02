@@ -1,0 +1,21 @@
+{
+  "name": "hackmd",
+  "version": "1.1.0",
+  "description": "Connect Claude to HackMD via OAuth MCP — create and edit notes, organize folders and books, push content, and visualize trade-offs. Requires HackMD account; no API token setup.",
+  "author": {
+    "name": "HackMD",
+    "email": "support@hackmd.io"
+  },
+  "homepage": "https://hackmd.io",
+  "repository": "https://github.com/hackmd-product/hackmd-claude-plugin",
+  "license": "MIT",
+  "keywords": [
+    "hackmd",
+    "markdown",
+    "notes",
+    "mcp",
+    "collaboration",
+    "documentation",
+    "oauth"
+  ]
+}
