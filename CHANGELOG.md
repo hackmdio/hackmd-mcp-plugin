@@ -4,7 +4,7 @@
 
 ### Added
 
-- README example prompts and a link to the [HackMD Privacy Policy](https://hackmd.io/s/privacy)
+- README example prompts (read / Markdown create / HTML visualize) and a link to the [HackMD Privacy Policy](https://hackmd.io/s/privacy)
 - Support contact on the README
 
 ### Fixed

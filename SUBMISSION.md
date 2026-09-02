@@ -29,9 +29,13 @@ git ls-tree HEAD hooks/scripts/mark-baseline.sh hooks/scripts/guard-update-note.
 
 ## Example prompts (paste into the form)
 
-1. 將目前的磁碟空間使用情況，用 HTML/CSS 圖解，將 HTML 內容上傳到 HackMD
-2. 列出最近 7 天更新的筆記並摘要變更
-3. 擬出「義大利 Verona 五日遊」的行程，以 Markdown 為主體，有需要可以用 HTML/CSS 輔助視覺呈現，上傳到 HackMD
+Use the English wording. Success is observable without talking to us.
+
+1. List the HackMD notes I opened recently (note history is enough). Pick at most 3, read each with get-note, and write a two-sentence summary. Do not create or edit any note.
+2. Create a new HackMD note titled "Verona 5-day itinerary". Body: a Markdown plan for five days in Verona, Italy, with morning / afternoon / evening for each day. Do not add HTML or CSS. When done, reply with only the title and the note URL.
+3. Create a single-page HTML/CSS visualization (no JavaScript) that compares two ways to share a trip on HackMD: a Markdown itinerary versus a one-page visual overview. Upload it as a new HackMD note, return the note URL, and remind me to enable Custom CSS preview.
+
+Verified 2026-09-02 against `https://mcp.hackmd.io/` as `elek@hackmd.io`: `get-me`, `get-history`, `get-note`, and two `create-note` calls succeeded. MCP `list-notes` / `get-note` do not expose a last-updated filter, and `search-notes` is title-only — do not ask reviewers to “summarize edits from the last 7 days”.
 
 ## Reviewer test account
 
@@ -40,30 +44,27 @@ Anthropic asks for a **standard testing account with sample data** so a reviewer
 ### What to create
 
 1. A dedicated HackMD user (not a staff daily-driver). Email + password is easier for reviewers than SSO-only.
-2. Grant it a free or paid plan that can create notes (prompts 1 and 3 write new notes).
-3. Seed data **before** you submit, so prompt 2 is not an empty list:
+2. Grant it a free or paid plan that can create notes (prompts 2 and 3 write new notes).
+3. Seed data **before** you submit, so prompt 1 is not an empty history:
 
 | Seed | Why |
 | --- | --- |
-| ≥3 notes whose last edit is within the last 7 days | Prompt 2 (recent updates) |
-| ≥2 notes last edited more than 7 days ago | Prompt 2 has something to exclude |
-| Distinct titles (mix of English and Chinese is fine) | Title-only search |
-| One folder containing ≥2 of those notes | Folder tools |
-| Optional: one team the test user can read/write | Team note tools, if exercised |
+| ≥3 notes with real paragraphs (not empty Untitled) | Prompt 1 (`get-history` + `get-note`) |
+| Open those three notes in the HackMD UI once | They appear in note history |
+| Distinct titles | Easy for the reviewer to match summaries |
+| Write quota that allows two new notes | Prompts 2 and 3 call `create-note` |
 
-Suggested titles for the recent notes (edit them the day you submit, so `lastChanged` is fresh):
+Suggested seed titles (open each once the day you submit):
 
 - `Review seed — project log`
 - `Review seed — meeting notes`
-- `Review seed — Verona research`
-
-Leave the older notes untouched so the 7-day cut is visible.
+- `Review seed — travel research`
 
 ### What to paste into the Anthropic form
 
 - Login URL: `https://hackmd.io/login`
 - Email and password of the test user
-- One sentence: “OAuth to `https://mcp.hackmd.io/` as this user. Seed notes titled `Review seed — *` were edited in the last 7 days.”
+- One sentence: “OAuth to `https://mcp.hackmd.io/` as this user. Open the `Review seed — *` notes once so they appear in history. Prompts 2 and 3 create new notes.”
 - After review, rotate the password.
 
 ### What we cannot put in the repo

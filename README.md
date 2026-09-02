@@ -44,18 +44,24 @@ Public HackMD MCP setup docs may still describe API tokens and `mcp-remote`. The
 
 ## Example prompts
 
-Copy one of these into Claude after the plugin is enabled and OAuth has completed.
+Copy one of these into Claude after the plugin is enabled and OAuth has completed. Each prompt is written so a reviewer can judge success from a single URL or a short list — no extra files, no local disk, no date filters the MCP server does not expose.
+
+**1. Read (OAuth + history + `get-note`)**
 
 ```
-將目前的磁碟空間使用情況，用 HTML/CSS 圖解，將 HTML 內容上傳到 HackMD
+List the HackMD notes I opened recently (note history is enough). Pick at most 3, read each with get-note, and write a two-sentence summary. Do not create or edit any note.
 ```
 
-```
-列出最近 7 天更新的筆記並摘要變更
-```
+**2. Write Markdown (`create-note`)**
 
 ```
-擬出「義大利 Verona 五日遊」的行程，以 Markdown 為主體，有需要可以用 HTML/CSS 輔助視覺呈現，上傳到 HackMD
+Create a new HackMD note titled "Verona 5-day itinerary". Body: a Markdown plan for five days in Verona, Italy, with morning / afternoon / evening for each day. Do not add HTML or CSS. When done, reply with only the title and the note URL.
+```
+
+**3. Visualize (`visualize-hmd` + `create-note`)**
+
+```
+Create a single-page HTML/CSS visualization (no JavaScript) that compares two ways to share a trip on HackMD: a Markdown itinerary versus a one-page visual overview. Upload it as a new HackMD note, return the note URL, and remind me to enable Custom CSS preview.
 ```
 
 ## Skills
