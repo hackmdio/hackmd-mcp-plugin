@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.1.1 — 2026-09-02
+
+### Added
+
+- README example prompts (read / Markdown create / HTML visualize) and a link to the [HackMD Privacy Policy](https://hackmd.io/s/privacy)
+- Support contact on the README
+
+### Fixed
+
+- Git file mode for hook scripts and `to-hackmd.py` (`100755`) so marketplace installs can execute them
+- Manifest `repository` URL and local `claude --plugin-dir` / `plugin validate` paths for a plugin-root repo
+
 ## 1.1.0 — 2026-08-26
 
 ### Removed
