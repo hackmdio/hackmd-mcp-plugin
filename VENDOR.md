@@ -25,7 +25,7 @@ Manually diff upstream `visualize-hmd/scripts/to-hackmd.py` and `visualize-hmd/r
 After sync:
 
 1. Review diff
-2. Bump plugin version in `.claude-plugin/plugin.json`
+2. Bump plugin version in `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json`
 3. Update pinned commit SHA in this file
 
 ## Plugin-only additions (not in upstream)

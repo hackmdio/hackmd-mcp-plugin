@@ -3,10 +3,11 @@ name: hackmd-mcp-usage
 description: |
   Cross-tool policy for HackMD MCP tools (https://mcp.hackmd.io/, OAuth — no API
   token). Diff-before-patch when calling update-note or update-team-note
-  (hook-enforced baseline). Structure-first when organizing notes into folders or
-  books. Search honesty when locating notes (search-notes is title-only).
-  Audience discipline and capability-gap disclosure when sharing or when MCP
-  lacks the needed action. Metadata discipline when creating or retitling notes.
+  (hook-enforced on Codex/Work; ChatGPT Chat has no hooks). Structure-first when
+  organizing notes into folders or books. Search honesty when locating notes
+  (search-notes is title-only). Audience discipline and capability-gap disclosure
+  when sharing or when MCP lacks the needed action. Metadata discipline when
+  creating or retitling notes.
 user-invocable: false
 ---
 
@@ -18,16 +19,23 @@ MCP host; the plugin needs no API token.
 
 ## Diff-before-patch — before every `update-*`
 
-A PreToolUse hook **denies** `update-note` / `update-team-note` unless a `get-*`
-call in this session wrote a baseline marker for the same `noteId` (marker is
-written by the PostToolUse hook on `get-note` / `get-team-note`).
+**Always call `get-note` or `get-team-note` immediately before `update-*`.**
+Do not skip this because a hook might catch it.
+
+- **ChatGPT Chat** does not run plugin hooks. The only protection is this
+  skill: fetch, merge, then write.
+- **Codex / ChatGPT Work** may run a PreToolUse hook that **denies**
+  `update-note` / `update-team-note` unless a `get-*` call in this session
+  wrote a baseline marker for the same `noteId` (PostToolUse on
+  `get-note` / `get-team-note`). Trust the hook when the host asks. A deny
+  is not permission to skip the fetch — return to step 1.
 
 1. **Fetch baseline.** Call `get-note` (or `get-team-note`) for the target
-   `noteId`. Done when the current body is in context — the marker now exists.
+   `noteId`. Done when the current body is in context.
 2. **Merge locally.** Apply the requested changes against that baseline. Done
    when every remote passage you did not intend to change is preserved verbatim.
 3. **Write merged body.** Call `update-*` with the full merged content. Done
-   when the update succeeds. If the hook denies, return to step 1.
+   when the update succeeds. If a hook denies, return to step 1.
 4. **Co-editing races.** If a human may be editing concurrently, re-fetch
    immediately before step 3 and re-merge (see
    `reference/workflow-branches.md`).
@@ -69,4 +77,5 @@ before any high-risk write so recovery has a reference point.
 ## Sibling skills
 
 `push-to-hackmd` and `visualize-hmd` publish through the same MCP tools. This
-policy and the diff-before-patch hooks apply to their writes as well.
+policy applies to their writes as well. Hooks, when the host runs them, enforce
+diff-before-patch on Codex/Work only.

@@ -9,7 +9,7 @@ description: >-
 
 # Push to HackMD
 
-Create or update HackMD notes from local files or session output through **MCP OAuth** (`https://mcp.hackmd.io/`). Follow the sibling `hackmd-mcp-usage` policy and hooks on every write.
+Create or update HackMD notes from local files or session output through **MCP OAuth** (`https://mcp.hackmd.io/`). Follow the sibling `hackmd-mcp-usage` policy on every write.
 
 ## Steps
 
@@ -17,7 +17,7 @@ Create or update HackMD notes from local files or session output through **MCP O
 
 Read the file the user named, or extract text from the session. Bodies may be plaintext, Markdown, HTML, or CSS. Combine multiple files under headings, or one note per file — confirm with the user. Title from the first `#` heading or filename stem; ask once if unclear.
 
-Rich standalone HTML: defer to `visualize-hmd` and its `to-hackmd.py` build step.
+Rich standalone HTML: defer to `visualize-hmd` (HackMD-safe markup, then `create-note`). Do not require a local Python build for ChatGPT Chat.
 
 Done when you have a title and body text ready to send.
 
@@ -41,13 +41,13 @@ Done when the tool returns a note id.
 
 ### 4b. Update (diff-before-patch)
 
-Follow `hackmd-mcp-usage` exactly:
+Follow `hackmd-mcp-usage` exactly. ChatGPT Chat does not run hooks — the fetch is mandatory anyway:
 
-1. `get-note` / `get-team-note` for the target id (hook writes baseline marker).
+1. `get-note` / `get-team-note` for the target id.
 2. Merge local changes into that baseline.
 3. `update-note` / `update-team-note` with the full merged body.
 
-If the PreToolUse hook denies, return to step 1. On contested-edit warnings, re-fetch and merge before retrying.
+If a PreToolUse hook denies (Codex / Work), return to step 1. On contested-edit warnings, re-fetch and merge before retrying.
 
 Done when update succeeds.
 
@@ -62,4 +62,4 @@ Return the note URL (`https://hackmd.io/<noteId>`), workspace (personal or team)
 ## Related skills
 
 - `visualize-hmd` — generated HTML visualization from the discussion
-- `hackmd-mcp-usage` — MCP workflow policy and hooks
+- `hackmd-mcp-usage` — MCP workflow policy

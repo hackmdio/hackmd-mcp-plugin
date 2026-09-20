@@ -1,0 +1,46 @@
+{
+  "name": "hackmd",
+  "version": "1.2.0",
+  "description": "Create and edit HackMD notes via OAuth MCP — folders, books, publishing, and visualizations. Requires a HackMD account; no API token setup.",
+  "author": {
+    "name": "HackMD",
+    "email": "support@hackmd.io",
+    "url": "https://hackmd.io"
+  },
+  "homepage": "https://hackmd.io",
+  "repository": "https://github.com/hackmdio/hackmd-mcp-plugin",
+  "license": "MIT",
+  "keywords": [
+    "hackmd",
+    "markdown",
+    "notes",
+    "mcp",
+    "collaboration",
+    "documentation",
+    "oauth"
+  ],
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
+  "interface": {
+    "displayName": "HackMD",
+    "shortDescription": "Collaborative Markdown notes",
+    "longDescription": "HackMD is a collaborative Markdown workspace. This plugin connects ChatGPT and Codex to your HackMD account through OAuth at https://mcp.hackmd.io/ — the plugin does not store an API token.\n\nYou can list recent notes from history, read and create Markdown notes (including team notes when you name a team), update a note only after fetching it first, organize notes into folders and books, and turn a discussion into a single-page HTML/CSS visualization published as a HackMD note.\n\nOrdinary ChatGPT Chat does not run plugin hooks. Before every update, call get-note or get-team-note and send the full merged body. Codex and ChatGPT Work can enforce the same rule with bundled hooks after you trust them.\n\nMCP cannot create invite links, publish a public page, search note bodies (search is title-only), or upload images. Use the HackMD web UI for those actions. Requires a HackMD account.",
+    "developerName": "HackMD",
+    "category": "Productivity",
+    "capabilities": [
+      "Create and edit Markdown notes",
+      "Organize notes into folders and books",
+      "Read recent note history",
+      "Publish HTML/CSS visualizations as notes"
+    ],
+    "websiteURL": "https://hackmd.io",
+    "privacyPolicyURL": "https://hackmd.io/s/privacy",
+    "termsOfServiceURL": "https://hackmd.io/s/terms",
+    "supportURL": "https://hackmd.io/s/tutorials",
+    "defaultPrompt": [
+      "List my recent HackMD notes, read up to 3 with get-note, and summarize each in two sentences. Do not create or edit notes.",
+      "Create a HackMD note titled Verona 5-day itinerary: Markdown plan, 5 days, morning/afternoon/evening. Reply with title and URL.",
+      "Create a one-page HTML/CSS (no JS) comparing Markdown vs visual trip overviews; upload as a HackMD note and return the URL."
+    ]
+  }
+}

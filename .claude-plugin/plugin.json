@@ -1,7 +1,7 @@
 {
   "name": "hackmd",
-  "version": "1.1.1",
-  "description": "Connect Claude to HackMD via OAuth MCP — create and edit notes, organize folders and books, push content, and visualize trade-offs. Requires HackMD account; no API token setup.",
+  "version": "1.2.0",
+  "description": "Create and edit HackMD notes via OAuth MCP — folders, books, publishing, and visualizations. Requires a HackMD account; no API token setup.",
   "author": {
     "name": "HackMD",
     "email": "support@hackmd.io",

@@ -8,7 +8,7 @@ NOTE_ID="$(printf '%s' "$INPUT" | python3 -c "
 import sys, json
 try:
     d = json.load(sys.stdin)
-    ti = d.get('tool_input') or {}
+    ti = d.get('tool_input') or d.get('toolInput') or {}
     for k in ('noteId', 'note_id', 'id'):
         v = ti.get(k)
         if v:
@@ -20,7 +20,8 @@ except Exception:
 
 deny() {
   local reason="$1"
-  python3 -c "import json,sys; print(json.dumps({'hookEventName':'PreToolUse','permissionDecision':'deny','permissionDecisionReason':sys.argv[1]}))" "$reason"
+  # Codex only honors deny inside hookSpecificOutput. Claude Code accepts the same shape.
+  python3 -c "import json,sys; print(json.dumps({'hookSpecificOutput':{'hookEventName':'PreToolUse','permissionDecision':'deny','permissionDecisionReason':sys.argv[1]}}))" "$reason"
   exit 0
 }
 
@@ -28,7 +29,14 @@ if [[ -z "$NOTE_ID" ]]; then
   deny "HackMD diff-before-patch: update-* requires noteId. Call get-note (or get-team-note) first, then update with merged content."
 fi
 
-MARKER_DIR="${CLAUDE_PLUGIN_ROOT:?}/.hackmd-baseline-markers"
+if [[ -n "${PLUGIN_DATA:-}" ]]; then
+  MARKER_ROOT="$PLUGIN_DATA"
+elif [[ -n "${CLAUDE_PLUGIN_DATA:-}" ]]; then
+  MARKER_ROOT="$CLAUDE_PLUGIN_DATA"
+else
+  MARKER_ROOT="${CLAUDE_PLUGIN_ROOT:?}"
+fi
+MARKER_DIR="${MARKER_ROOT}/.hackmd-baseline-markers"
 MARKER="${MARKER_DIR}/baseline-${NOTE_ID}"
 
 if [[ ! -f "$MARKER" ]]; then

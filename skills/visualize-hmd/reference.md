@@ -353,11 +353,16 @@ details[open] { background: var(--bg-surface); }
 
 ## HackMD publish (MCP)
 
-After `to-hackmd.py` produces `/tmp/viz-hackmd.html`:
+Emit the note body as HackMD-safe markup (this boilerplate). Do not require
+`/tmp` or `python3`. ChatGPT Chat has no local build step.
 
 1. **Create:** `create-note` with `title` (e.g. `Visualization — <topic>`) and
-   `content` from the built file. Prepend the Custom CSS reminder comment.
-2. **Update:** `get-note` → merge body → `update-note` per `hackmd-mcp-usage`
-   (hooks enforce diff-before-patch).
+   `content` set to the markup. Prepend the Custom CSS reminder comment.
+2. **Update:** `get-note` → merge body → `update-note` per `hackmd-mcp-usage`.
+   ChatGPT Chat does not run hooks — fetch before every update. Codex/Work
+   hooks, when trusted, deny updates that skip the fetch.
+
+Optional: if `python3` is available, `scripts/to-hackmd.py --strict` can convert
+a full HTML document into this markup. That path is Codex-only.
 
 Note URL: `https://hackmd.io/<noteId>`
