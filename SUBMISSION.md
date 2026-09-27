@@ -1,6 +1,6 @@
 # Community Marketplace Submission Checklist
 
-Maintainer notes for the Anthropic plugin directory form. Do not put passwords or session cookies in this file.
+Maintainer notes for the Anthropic plugin directory form. OpenAI listing copy is in [OPENAI-SUBMISSION.md](OPENAI-SUBMISSION.md). Do not put passwords or session cookies in this file.
 
 ## Pre-submit validation
 
@@ -19,7 +19,7 @@ git ls-tree HEAD hooks/scripts/mark-baseline.sh hooks/scripts/guard-update-note.
 | Field | Value |
 | --- | --- |
 | **Name** | hackmd |
-| **Description** | Connect Claude to HackMD via OAuth MCP — notes, folders, books, publish, and visualize. |
+| **Description** | Create and edit HackMD notes via OAuth MCP — folders, books, publishing, and visualizations. |
 | **Repository** | `hackmdio/hackmd-mcp-plugin` (must be **public** before submit) |
 | **Homepage** | https://hackmd.io |
 | **Privacy policy** | https://hackmd.io/s/privacy |

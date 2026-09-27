@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.2.0 — 2026-09-20
+
+### Added
+
+- `.codex-plugin/plugin.json` for OpenAI Plugins Directory (With MCP) listing fields, starter prompts, and HTTPS support URL
+- [OPENAI-SUBMISSION.md](OPENAI-SUBMISSION.md): portal copy, 5 positive / 3 negative test cases, demo recording script
+
+### Changed
+
+- Neutral package copy: no “Connect Claude to HackMD” or Claude-only install path as the primary story
+- `guard-update-note.sh` deny JSON uses Codex `hookSpecificOutput` (Claude Code accepts the same shape)
+- Baseline markers prefer `PLUGIN_DATA` / `CLAUDE_PLUGIN_DATA` when set
+- `visualize-hmd` publishes HackMD-safe markup via MCP without `/tmp` or `python3`; the script remains an optional Codex check
+- Skills state that ChatGPT Chat does not run hooks, so every update still needs `get-note` first
+
 ## 1.1.1 — 2026-09-02
 
 ### Added
