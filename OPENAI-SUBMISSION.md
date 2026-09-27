@@ -55,9 +55,32 @@ Live ChatGPT OAuth still depends on DEV-3148 (challenge token + ChatGPT redirect
 | Cursor preview browser | No automation host — could not drive ChatGPT from the IDE preview. |
 | Test account seed | Logged in at `https://hackmd.io/login` as `mcp@hackmd.io` (no MFA). User `hackmd-mcp-test` is Admin of `hackmd-mcp-test-team`. History has the three Review seed notes; bodies are real paragraphs; each note was opened. |
 
-**Not yet observed:** ChatGPT OAuth redirect round-trip, scope consent screen, or the three starter flows inside Chat. Next operator needs the company org login (same org as portal submit) after DEV-3148 redirects are live.
+## Developer Mode 實測紀錄（2026-09-27）
 
-**Flag for Dev:** advertised MCP OAuth scope is `mcp` only. OpenAI’s workspace-domain-restriction guidance also wants `openid` + `email` and a UserInfo endpoint with `email_verified: true`. That stays on DEV-3148.
+Logged-in ChatGPT in Arc’s HackMD profile. Visible account: **Max Wu**, plan **免費版**. Developer mode was off; this session turned **開發者模式** on (安全性與登入). Plugins → 新增外掛程式 → 建立應用程式 → 建立 MCP 應用程式, name `HackMD`, URL `https://mcp.hackmd.io/`, auth OAuth, risk checkbox on, then 建立.
+
+ChatGPT left for HackMD authorize. The page body was only:
+
+```json
+{"error":"invalid_request","error_description":"Unsupported MCP OAuth client_id."}
+```
+
+Observed authorize request (query shape, not a full paste of `state` / `code_challenge`):
+
+| Param | Value |
+| --- | --- |
+| Endpoint | `https://hackmd.io/mcp/oauth/authorize` |
+| `response_type` | `code` |
+| `client_id` | `https://chatgpt.com/oauth/A15BxIyxUtob/client.json` |
+| `redirect_uri` | `https://chatgpt.com/connector/oauth/A15BxIyxUtob` |
+| `scope` | `mcp` |
+| `code_challenge_method` | `S256` |
+| `resource` | `https://mcp.hackmd.io` |
+| `ui_locales` | `zh-TW` |
+
+HackMD rejected the client before any consent screen. `client_id` is a ChatGPT CIMD document URL, not a pre-registered client id. `scope` is only `mcp`. No tool call ran, so the three starters were not observed.
+
+**Flag for Dev (DEV-3148):** accept this ChatGPT CIMD `client_id` and `redirect_uri` on `https://hackmd.io/mcp/oauth/authorize`. Advertised scope is still only `mcp`; workspace-domain guidance also wants `openid` + `email` and UserInfo `email_verified: true`.
 
 ## Reviewer fixtures
 
